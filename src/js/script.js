@@ -315,10 +315,8 @@ class LeadCaptureForm {
         const successMessage = document.createElement('div');
         successMessage.className = 'success-message show';
         
-        const submissionId = submissionResult?.id ? `#${submissionResult.id}` : '';
-        
         successMessage.innerHTML = `
-            <h3>Registration Successful! ${submissionId}</h3>
+            <h3>Registration Successful!</h3>
             <p>Thank you for your interest in the 7k Metals South America Pre-Launch. We'll contact you soon with more details.</p>
             <p><small>Your submission has been securely recorded in our database.</small></p>
         `;
