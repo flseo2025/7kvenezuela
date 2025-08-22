@@ -1,0 +1,26 @@
+{
+  "name": "7k-metals-venezuela",
+  "version": "1.0.0",
+  "description": "Professional lead capture page for 7k Metals Venezuela Gold and Silver Presentation",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "npx live-server src --port=3000 --open",
+    "dev": "npx live-server src --port=3000 --open --watch",
+    "build": "echo 'Static site - no build process needed'",
+    "serve": "npx http-server src -p 3000 -o"
+  },
+  "keywords": [
+    "7k-metals",
+    "venezuela",
+    "gold",
+    "silver",
+    "lead-capture",
+    "presentation"
+  ],
+  "author": "7k Metals Venezuela",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "http-server": "^14.1.1"
+  }
+}
