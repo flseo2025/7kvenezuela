@@ -18,18 +18,14 @@ const translations = {
         
         // Interest section
         'form.interest.title': 'Interest Level',
-        'form.interest.very_interested': 'Very Interested',
-        'form.interest.somewhat_interested': 'Somewhat Interested',
-        'form.interest.just_curious': 'Just Curious',
-        'form.interest.not_sure': 'Not Sure Yet',
+        'form.interest.high': 'High',
+        'form.interest.need_more_info': 'Need more information',
         
         // Package section
         'form.package.title': 'Package Preferred',
-        'form.package.basic': 'Basic Package',
-        'form.package.standard': 'Standard Package', 
-        'form.package.premium': 'Premium Package',
-        'form.package.vip': 'VIP Package',
-        'form.package.not_sure': 'Not Sure Yet',
+        'form.package.legacy': 'Legacy at $599',
+        'form.package.basic': 'Basic at $149 (Can upgrade later)',
+        'form.package.undecided': 'Undecided',
         
         // Payment methods
         'form.payment.title': 'Preferred Method of Payment',
@@ -60,6 +56,7 @@ const translations = {
         'form.submitting': 'Submitting...',
         'form.success.title': 'Registration Submitted Successfully!',
         'form.success.message': 'Thank you for your interest in 7k Metals! We will contact you soon with more information about our South America pre-launch.',
+        'form.success.database': 'Your submission has been securely recorded in our database.',
         
         // Validation messages
         'validation.required': 'This field is required.',
@@ -97,18 +94,14 @@ const translations = {
         
         // Interest section
         'form.interest.title': 'Nivel de Interés',
-        'form.interest.very_interested': 'Muy Interesado',
-        'form.interest.somewhat_interested': 'Algo Interesado',
-        'form.interest.just_curious': 'Solo Curioso',
-        'form.interest.not_sure': 'Aún No Estoy Seguro',
+        'form.interest.high': 'Alto',
+        'form.interest.need_more_info': 'Necesito más información',
         
         // Package section
         'form.package.title': 'Paquete Preferido',
-        'form.package.basic': 'Paquete Básico',
-        'form.package.standard': 'Paquete Estándar',
-        'form.package.premium': 'Paquete Premium',
-        'form.package.vip': 'Paquete VIP',
-        'form.package.not_sure': 'Aún No Estoy Seguro',
+        'form.package.legacy': 'Legacy a $599',
+        'form.package.basic': 'Básico a $149 (Se puede actualizar después)',
+        'form.package.undecided': 'Indeciso',
         
         // Payment methods
         'form.payment.title': 'Método de Pago Preferido',
@@ -139,6 +132,7 @@ const translations = {
         'form.submitting': 'Enviando...',
         'form.success.title': '¡Registro Enviado Exitosamente!',
         'form.success.message': '¡Gracias por tu interés en 7k Metals! Te contactaremos pronto con más información sobre nuestro pre-lanzamiento en Sudamérica.',
+        'form.success.database': 'Tu registro ha sido guardado de forma segura en nuestra base de datos.',
         
         // Validation messages
         'validation.required': 'Este campo es obligatorio.',
@@ -156,6 +150,82 @@ const translations = {
         // Footer
         'footer.prelaunch': 'Pre-Lanzamiento Sudamérica',
         'footer.rights': 'Todos los derechos reservados'
+    },
+    
+    pt: {
+        // Header content
+        'welcome.title': 'Bem-vindos ao Pré-Lançamento da América do Sul!',
+        'welcome.description': 'Vocês são os primeiros membros de uma empresa de metais preciosos muito emocionante que está crescendo ao redor do mundo. Por favor, entendam que no pré-lançamento não temos todas as capacidades do sistema que teremos no futuro enquanto continuamos a estabelecer seu país.',
+        'quote.bible': '"A prata é minha e o ouro é meu, diz o Senhor dos Exércitos" - Ageu 2:8',
+        'quote.blessing': 'E vocês também podem ser abençoados com Ouro e Prata',
+        
+        // Form sections
+        'form.preregistration': 'Pré-Cadastro de Membro 7k',
+        'form.referredby': 'Indicado Por',
+        'form.firstname': 'Nome',
+        'form.lastname': 'Sobrenome',
+        'form.mobile': 'Celular',
+        'form.email': 'E-mail',
+        'form.required': '*',
+        
+        // Interest section
+        'form.interest.title': 'Nível de Interesse',
+        'form.interest.high': 'Alto',
+        'form.interest.need_more_info': 'Preciso de mais informações',
+        
+        // Package section
+        'form.package.title': 'Pacote Preferido',
+        'form.package.legacy': 'Legacy por R$ 3.199',
+        'form.package.basic': 'Básico por R$ 799 (Pode atualizar depois)',
+        'form.package.undecided': 'Indeciso',
+        
+        // Payment methods
+        'form.payment.title': 'Método de Pagamento Preferido',
+        'form.payment.label': 'Selecione métodos de pagamento (marque todos que se aplicam)',
+        'form.payment.credit_card': 'Cartão de Crédito',
+        'form.payment.debit_card': 'Cartão de Débito',
+        'form.payment.bank_transfer': 'Transferência Bancária',
+        'form.payment.paypal': 'PayPal',
+        'form.payment.digital_wallet': 'Carteira Digital USDT',
+        'form.payment.other': 'Outro',
+        'form.payment.other_specify': 'Por favor, especifique outro método de pagamento:',
+        'form.payment.other_placeholder': 'Digite o método de pagamento',
+        'form.payment.clarification': '*Observação: Você NÃO será cobrado neste momento. O pagamento só será processado posteriormente quando o notificarmos, a menos que você tenha um cartão de crédito imediatamente compatível com nosso sistema.',
+        
+        // Contact information
+        'form.contact.title': 'Suas Informações de Contato',
+        'form.contact.mailing_address': 'Endereço de Correspondência',
+        'form.contact.shipping_address': 'Endereço de Entrega',
+        'form.contact.same_as_mailing': 'Igual ao endereço de correspondência',
+        
+        // Additional information
+        'form.additional.title': 'Informações Adicionais',
+        'form.additional.notes': 'Observações',
+        'form.additional.notes_placeholder': 'Comentários ou perguntas adicionais...',
+        
+        // Form submission
+        'form.submit': 'Enviar Cadastro',
+        'form.submitting': 'Enviando...',
+        'form.success.title': 'Cadastro Enviado com Sucesso!',
+        'form.success.message': 'Obrigado pelo seu interesse na 7k Metals! Entraremos em contato em breve com mais informações sobre nosso pré-lançamento na América do Sul.',
+        'form.success.database': 'Seu cadastro foi registrado com segurança em nosso banco de dados.',
+        
+        // Validation messages
+        'validation.required': 'Este campo é obrigatório.',
+        'validation.email': 'Por favor, digite um endereço de e-mail válido.',
+        'validation.phone': 'Por favor, digite um número de telefone válido.',
+        'validation.name': 'Por favor, digite apenas letras e espaços.',
+        'validation.payment_required': 'Por favor, selecione pelo menos um método de pagamento.',
+        'validation.shipping_required': 'Por favor, digite um endereço de entrega ou marque "Igual ao endereço de correspondência".',
+        'validation.radio_required': 'Por favor, selecione uma opção.',
+        
+        // Error messages
+        'error.submission': 'Houve um erro ao enviar seu formulário. Por favor, tente novamente.',
+        'error.network': 'Erro de rede. Por favor, verifique sua conexão e tente novamente.',
+        
+        // Footer
+        'footer.prelaunch': 'Pré-Lançamento América do Sul',
+        'footer.rights': 'Todos os direitos reservados'
     }
 };
 
@@ -187,10 +257,21 @@ class TranslationManager {
         if (lang !== this.currentLang) {
             this.currentLang = lang;
             localStorage.setItem('preferred-language', lang);
+            this.clearValidationErrors();
             this.translatePage();
             this.updateActiveButton();
             this.updatePageMeta();
         }
+    }
+    
+    clearValidationErrors() {
+        // Clear all existing validation error messages when switching languages
+        const errorMessages = document.querySelectorAll('.error-message');
+        errorMessages.forEach(error => error.remove());
+        
+        // Remove error classes from inputs
+        const errorInputs = document.querySelectorAll('.error');
+        errorInputs.forEach(input => input.classList.remove('error'));
     }
     
     translatePage() {
@@ -225,18 +306,43 @@ class TranslationManager {
     
     updatePageMeta() {
         // Update document title and meta tags based on language
-        const title = this.currentLang === 'es' 
-            ? '7k Metals - Pre-Lanzamiento Sudamérica | Metales Preciosos'
-            : '7k Metals - South America Pre-Launch | Precious Metals';
+        let title, description;
+        
+        switch (this.currentLang) {
+            case 'es':
+                title = '7k Metals - Pre-Lanzamiento Sudamérica | Metales Preciosos';
+                description = 'Únete al pre-lanzamiento de 7k Metals en Sudamérica. Compañía líder en metales preciosos con oportunidades de inversión en oro y plata.';
+                break;
+            case 'pt':
+                title = '7k Metals - Pré-Lançamento América do Sul | Metais Preciosos';
+                description = 'Junte-se ao pré-lançamento da 7k Metals na América do Sul. Empresa líder em metais preciosos com oportunidades de investimento em ouro e prata.';
+                break;
+            default:
+                title = '7k Metals - South America Pre-Launch | Precious Metals';
+                description = 'Join the 7k Metals pre-launch in South America. Leading precious metals company with gold and silver investment opportunities.';
+        }
+        
         document.title = title;
         
         // Update meta description
         const metaDesc = document.querySelector('meta[name="description"]');
         if (metaDesc) {
-            metaDesc.content = this.currentLang === 'es'
-                ? 'Únete al pre-lanzamiento de 7k Metals en Sudamérica. Compañía líder en metales preciosos con oportunidades de inversión en oro y plata.'
-                : 'Join the 7k Metals pre-launch in South America. Leading precious metals company with gold and silver investment opportunities.';
+            metaDesc.content = description;
         }
+        
+        // Update Open Graph title and description
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.content = title;
+        
+        const ogDesc = document.querySelector('meta[property="og:description"]');
+        if (ogDesc) ogDesc.content = description;
+        
+        // Update Twitter card title and description
+        const twitterTitle = document.querySelector('meta[property="twitter:title"]');
+        if (twitterTitle) twitterTitle.content = title;
+        
+        const twitterDesc = document.querySelector('meta[property="twitter:description"]');
+        if (twitterDesc) twitterDesc.content = description;
     }
     
     getTranslation(key) {

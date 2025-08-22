@@ -583,25 +583,42 @@ input[type="checkbox"]:checked + .checkbox-custom::after {
     letter-spacing: 0.5px;
 }
 
-/* Mobile responsive for language toggle */
+/* Three-language responsive layout */
 @media (max-width: 768px) {
     .language-toggle {
         top: 10px;
         right: 10px;
-        padding: 3px;
+        padding: 2px;
+        gap: 2px;
     }
     
     .lang-btn {
-        padding: 6px 12px;
-        gap: 6px;
+        padding: 4px 8px;
+        gap: 4px;
+        min-width: auto;
     }
     
     .lang-btn .flag {
-        font-size: 14px;
+        font-size: 12px;
     }
     
     .lang-btn .lang-text {
-        font-size: 11px;
+        font-size: 10px;
+    }
+}
+
+/* Extra small screens - stack vertically if needed */
+@media (max-width: 480px) {
+    .language-toggle {
+        flex-direction: column;
+        gap: 1px;
+        padding: 2px;
+    }
+    
+    .lang-btn {
+        padding: 6px 8px;
+        justify-content: center;
+        min-width: 50px;
     }
 }
 

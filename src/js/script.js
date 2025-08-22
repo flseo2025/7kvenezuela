@@ -452,12 +452,12 @@ class LeadCaptureForm {
         if (isLoading) {
             this.submitButton.disabled = true;
             this.submitButton.classList.add('loading');
-            this.submitButton.textContent = 'Submitting...';
+            this.submitButton.textContent = this.getTranslation('form.submitting');
             this.form.classList.add('loading');
         } else {
             this.submitButton.disabled = false;
             this.submitButton.classList.remove('loading');
-            this.submitButton.textContent = 'Submit Registration';
+            this.submitButton.textContent = this.getTranslation('form.submit');
             this.form.classList.remove('loading');
         }
     }
@@ -467,9 +467,9 @@ class LeadCaptureForm {
         successMessage.className = 'success-message show';
         
         successMessage.innerHTML = `
-            <h3>Registration Successful!</h3>
-            <p>Thank you for your interest in the 7k Metals South America Pre-Launch. We'll contact you soon with more details.</p>
-            <p><small>Your submission has been securely recorded in our database.</small></p>
+            <h3>${this.getTranslation('form.success.title')}</h3>
+            <p>${this.getTranslation('form.success.message')}</p>
+            <p><small>${this.getTranslation('form.success.database')}</small></p>
         `;
         
         this.form.parentNode.insertBefore(successMessage, this.form);

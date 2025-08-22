@@ -76,6 +76,12 @@ This project uses SPARC (Specification, Pseudocode, Architecture, Refinement, Co
 4. **Refinement** - TDD implementation (`sparc tdd`)
 5. **Completion** - Integration (`sparc run integration`)
 
+## ⚠️ FORM FIELD PRESERVATION RULES
+- **NEVER change existing form field names, values, or options without explicit user request**
+- **NEVER modify dropdown options, radio button values, or checkbox labels unless specifically asked**
+- **ALWAYS preserve exact wording and capitalization of form elements**
+- **ASK before making ANY changes to form field content**
+
 ## Code Style & Best Practices
 
 - **Modular Design**: Files under 500 lines

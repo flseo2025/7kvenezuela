@@ -1,7 +1,22 @@
 # 🧪 Testing Guide
 ## 7k Metals South America Pre-Launch Lead Capture Form
 
-Complete testing instructions to verify your Supabase integration is working correctly.
+Complete testing instructions to verify all features including bilingual functionality and integrations.
+
+---
+
+## 🌍 **NEW: Language Toggle Testing (30 seconds)**
+
+### **Test Bilingual Functionality**
+1. **Load the page** - Should default to English
+2. **Click 🇪🇸 ES button** - Everything should translate to Spanish instantly
+3. **Click 🇺🇸 EN button** - Should switch back to English
+4. **Refresh page** - Should remember your language preference
+5. **Check footer** - Should translate: "Pre-Lanzamiento Sudamérica" / "South America Pre-Launch"
+
+### **Mobile Language Toggle**
+- **Test on mobile** - Toggle should be positioned properly in top-right
+- **Tap both flags** - Should work without issues on touch devices
 
 ---
 
@@ -35,7 +50,7 @@ Fill out the form with test data:
 | Referrer Mobile | +1-555-0123 |
 | Interest Level | High |
 | Package Preferred | Legacy at $599 |
-| Payment Method | Credit Card |
+| Payment Methods | Credit Card + Digital Wallet USDT (select multiple) |
 | Your First Name | Jane |
 | Your Last Name | Smith |
 | Your Mobile | +1-555-0456 |
@@ -44,9 +59,48 @@ Fill out the form with test data:
 | Notes | This is a test submission |
 
 ### **4. Verify Success**
-- Look for: `Registration Successful! #123` message
+- Look for: `Registration Successful!` message
 - Check console for: `✅ Successfully submitted to Supabase`
 - Check Supabase dashboard for new record
+
+---
+
+## 📱 **NEW: Payment Method Testing**
+
+### **Test Checkbox Multi-Select**
+1. **Desktop**: Should see 2-3 payment options per row in grid layout
+2. **Mobile**: Should see single column layout with large touch targets
+3. **Selection**: Click multiple payment methods - should highlight in gold
+4. **"Other" option**: Should show text field when "Other" is selected
+5. **Validation**: Try submitting without selecting any payment method - should show error
+
+### **Test Payment Options**
+Available payment methods to test:
+- ✅ Credit Card
+- ✅ Debit Card  
+- ✅ Bank Transfer
+- ✅ PayPal
+- ✅ Digital Wallet USDT (NEW)
+- ✅ Other (with text field)
+
+---
+
+## 🌍 **NEW: Bilingual Form Testing**
+
+### **Test in Spanish**
+1. **Switch to Spanish** (🇪🇸 ES button)
+2. **Fill form in Spanish** - all labels should be translated
+3. **Test validation errors** - should appear in Spanish
+4. **Submit form** - success message should be in Spanish
+5. **Check data storage** - form should submit properly in Spanish
+
+### **Translation Coverage to Verify**
+- ✅ Header: "¡Bienvenidos al Pre-Lanzamiento de Sudamérica!"
+- ✅ Form labels: "Nombre", "Apellido", "Móvil", etc.
+- ✅ Payment methods: "Tarjeta de Crédito", "Billetera Digital USDT"
+- ✅ Validation messages: "Este campo es obligatorio"
+- ✅ Submit button: "Enviar Registro"
+- ✅ Footer: "Pre-Lanzamiento Sudamérica"
 
 ---
 
@@ -62,7 +116,7 @@ Fill out the form with test data:
 4. Verify data in Supabase Table Editor
 
 **Expected Results**:
-- ✅ Success message with submission ID
+- ✅ Success message displays properly
 - ✅ Data appears in `lead_submissions` table
 - ✅ No errors in browser console
 
@@ -84,28 +138,81 @@ Fill out the form with test data:
 **Purpose**: Test conditional field display
 
 **Steps**:
-1. Select "Other" from payment method dropdown
-2. Verify text field appears
+1. Check "Other" from payment method checkboxes
+2. Verify text field appears below
 3. Submit with empty "other" field
 4. Submit with custom payment method
 
 **Expected Results**:
-- ✅ Text field shows/hides correctly
+- ✅ Text field shows/hides correctly when "Other" is checked/unchecked
 - ✅ Empty "other" field submits as "other"
 - ✅ Custom text submits correctly
 
-### **Test 4: Address Sync Feature**
-**Purpose**: Test mailing/shipping address sync
+### **Test 4: Simplified Form (No Shipping Address)**
+**Purpose**: Verify shipping address fields are hidden
 
 **Steps**:
-1. Enter mailing address
-2. Check "Same as mailing address"
-3. Verify shipping address populates
-4. Uncheck and verify field becomes editable
+1. Scroll through entire form
+2. Look for shipping address section
+3. Submit form with only mailing address
 
 **Expected Results**:
-- ✅ Shipping address auto-fills
-- ✅ Field disables when synced
+- ✅ No shipping address field visible
+- ✅ Form submits successfully with only mailing address
+
+---
+
+## ✅ **COMPREHENSIVE TEST CHECKLIST**
+
+### **🌍 Language & Localization**
+- [ ] English loads by default
+- [ ] Spanish toggle works (🇪🇸 ES button)
+- [ ] Language preference persists after refresh
+- [ ] All form labels translate correctly
+- [ ] Validation messages appear in selected language
+- [ ] Footer translates properly
+- [ ] Meta tags update for each language
+
+### **📱 Mobile & Responsive Design**
+- [ ] Language toggle positioned correctly on mobile
+- [ ] Payment checkboxes display in single column on mobile
+- [ ] Payment checkboxes display in grid on desktop
+- [ ] Form is fully responsive on tablet sizes
+- [ ] Touch targets are adequate size on mobile
+- [ ] No horizontal scrolling on any device
+
+### **💳 Payment Method Features**
+- [ ] All 6 payment options are visible
+- [ ] Multiple payment methods can be selected
+- [ ] "Digital Wallet USDT" option is present
+- [ ] "Other" checkbox shows text field when selected
+- [ ] Payment validation prevents submission without selection
+- [ ] Payment clarification note is visible and translated
+
+### **📝 Form Functionality**
+- [ ] All required fields show validation errors when empty
+- [ ] Email validation works correctly
+- [ ] Phone number validation accepts international formats
+- [ ] Name fields only accept letters and spaces
+- [ ] Form submits successfully with valid data
+- [ ] Notes field is optional and working
+
+### **🗄️ Data Storage**
+- [ ] Supabase receives form submissions
+- [ ] Google Sheets receives form submissions
+- [ ] Data is stored correctly in both systems
+- [ ] Multiple payment methods save as comma-separated values
+- [ ] Spanish form submissions work properly
+- [ ] Success message displays after submission
+
+### **🧪 Browser Compatibility**
+- [ ] Chrome/Chromium - all features work
+- [ ] Firefox - all features work
+- [ ] Safari - all features work (if available)
+- [ ] Mobile browsers - all features work
+- [ ] No console errors in any browser
+
+**Pass Criteria**: All checkboxes must be ✅ before deployment
 - ✅ Field re-enables when unchecked
 
 ### **Test 5: Error Handling**
@@ -140,8 +247,6 @@ Verify these fields are populated correctly:
 - `payment_method` - Dropdown selection or custom text
 - `contact_*` - Contact information
 - `mailing_address` - Text area content
-- `shipping_address` - Text area or null
-- `same_as_mailing` - Boolean true/false
 - `notes` - Text content or null
 
 ### **3. SQL Query Testing**
