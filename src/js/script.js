@@ -18,8 +18,9 @@ class LeadCaptureForm {
 
     bindEvents() {
         this.form.addEventListener('submit', this.handleSubmit.bind(this));
-        this.form.addEventListener('input', this.clearError.bind(this));
-        this.form.addEventListener('change', this.clearError.bind(this));
+        this.form.addEventListener('input', this.handleRealTimeValidation.bind(this));
+        this.form.addEventListener('change', this.handleRealTimeValidation.bind(this));
+        this.form.addEventListener('blur', this.handleFieldBlur.bind(this), true);
     }
 
     setupAddressSync() {
@@ -56,7 +57,7 @@ class LeadCaptureForm {
         });
     }
 
-    validateField(field) {
+    validateField(field, showError = true) {
         const value = field.value.trim();
         const fieldType = field.type;
         const fieldName = field.name;
@@ -72,21 +73,52 @@ class LeadCaptureForm {
             errorMessage = 'This field is required.';
         }
 
-        // Email validation
+        // Email validation with enhanced pattern
         if (fieldType === 'email' && value) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
             if (!emailRegex.test(value)) {
                 isValid = false;
                 errorMessage = 'Please enter a valid email address.';
             }
         }
 
-        // Phone validation
+        // International phone validation (South America friendly)
         if (fieldType === 'tel' && value) {
-            const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-            if (!phoneRegex.test(value.replace(/[\s\-\(\)]/g, ''))) {
+            // Remove all non-digit characters except + at the beginning
+            const phoneClean = value.replace(/[^\d+]/g, '').replace(/(?!^)\+/g, '');
+            
+            // Allow various South American formats:
+            // Venezuela: +58 XXX XXX XXXX (12-13 digits with country code)
+            // Colombia: +57 XXX XXX XXXX (12-13 digits with country code)
+            // Brazil: +55 XX XXXX XXXX (13-14 digits with country code)
+            // Argentina: +54 XX XXXX XXXX (12-14 digits with country code)
+            // Local numbers: 7-11 digits
+            // International: 8-15 digits total
+            
+            let isValidPhone = false;
+            
+            if (phoneClean.startsWith('+')) {
+                // International format: +XX to +XXX followed by 7-12 more digits
+                const intlRegex = /^\+[1-9]\d{7,14}$/;
+                isValidPhone = intlRegex.test(phoneClean);
+            } else {
+                // Local format: 7-11 digits (covers most South American local numbers)
+                const localRegex = /^[0-9]{7,11}$/;
+                isValidPhone = localRegex.test(phoneClean);
+            }
+            
+            if (!isValidPhone) {
                 isValid = false;
-                errorMessage = 'Please enter a valid phone number.';
+                errorMessage = 'Please enter a valid phone number (local: 7-11 digits, international: +country code + number).';
+            }
+        }
+
+        // Name validation (letters, spaces, hyphens, apostrophes only)
+        if ((fieldName.includes('Name') || fieldName.includes('firstName') || fieldName.includes('lastName')) && value) {
+            const nameRegex = /^[a-zA-Z\s\-'\.]+$/;
+            if (!nameRegex.test(value)) {
+                isValid = false;
+                errorMessage = 'Please enter a valid name (letters only).';
             }
         }
 
@@ -106,7 +138,8 @@ class LeadCaptureForm {
             errorMessage = 'Please select an option.';
         }
 
-        if (!isValid) {
+        // Only show error if requested (used for blur events)
+        if (!isValid && showError) {
             this.showError(field, errorMessage);
         }
 
@@ -186,9 +219,43 @@ class LeadCaptureForm {
         }
     }
 
+    handleRealTimeValidation(e) {
+        const field = e.target;
+        
+        // Clear any existing error state first
+        this.removeErrorMessage(field);
+        field.classList.remove('error', 'valid');
+        
+        // Skip validation for empty optional fields
+        if (!field.hasAttribute('required') && !field.value.trim()) {
+            return;
+        }
+        
+        // Validate the field and provide visual feedback
+        const isValid = this.validateField(field, false); // false = don't show error message yet
+        
+        if (field.value.trim()) {
+            if (isValid) {
+                field.classList.add('valid');
+            } else {
+                field.classList.add('error');
+            }
+        }
+    }
+    
+    handleFieldBlur(e) {
+        const field = e.target;
+        
+        // Only validate on blur if field has content or is required
+        if (field.hasAttribute('required') || field.value.trim()) {
+            this.validateField(field, true); // true = show error messages
+        }
+    }
+    
     clearError(e) {
         const field = e.target;
         this.removeErrorMessage(field);
+        field.classList.remove('error', 'valid');
     }
 
     getFormData() {
@@ -224,11 +291,49 @@ class LeadCaptureForm {
         try {
             const formData = this.getFormData();
             
-            // Submit to Supabase
-            const result = await this.submitToAPI(formData);
+            // Submit to both Supabase and Google Sheets
+            const results = await Promise.allSettled([
+                this.submitToAPI(formData), // Supabase
+                submitToGoogleSheets(formData) // Google Sheets
+            ]);
             
-            this.showSuccessMessage(result);
-            this.resetForm();
+            const supabaseResult = results[0];
+            const googleSheetsResult = results[1];
+            
+            // Check if at least one submission succeeded
+            let successCount = 0;
+            let errors = [];
+            
+            if (supabaseResult.status === 'fulfilled') {
+                console.log('✅ Supabase submission successful');
+                successCount++;
+            } else {
+                console.error('❌ Supabase submission failed:', supabaseResult.reason);
+                errors.push('Database: ' + supabaseResult.reason.message);
+            }
+            
+            if (googleSheetsResult.status === 'fulfilled') {
+                console.log('✅ Google Sheets submission successful');
+                successCount++;
+            } else {
+                console.error('❌ Google Sheets submission failed:', googleSheetsResult.reason);
+                errors.push('Spreadsheet: ' + googleSheetsResult.reason.message);
+            }
+            
+            if (successCount > 0) {
+                // At least one submission succeeded
+                this.showSuccessMessage(supabaseResult.status === 'fulfilled' ? supabaseResult.value : null);
+                this.resetForm();
+                
+                // If only partial success, log warnings
+                if (errors.length > 0) {
+                    console.warn('⚠️ Partial submission success. Errors:', errors);
+                }
+            } else {
+                // Both submissions failed
+                throw new Error('All submission methods failed: ' + errors.join(', '));
+            }
+            
         } catch (error) {
             console.error('Submission error:', error);
             this.showErrorMessage(`There was an error submitting your information: ${error.message}. Please try again.`);
@@ -374,18 +479,48 @@ class LeadCaptureForm {
     }
 }
 
-// Phone number formatting
+// International phone number formatting (South America friendly)
 function formatPhoneNumber(input) {
-    // Remove all non-digit characters
-    let cleaned = input.value.replace(/\D/g, '');
+    let value = input.value;
     
-    // Format as (XXX) XXX-XXXX for US numbers
-    if (cleaned.length >= 10) {
-        let formatted = cleaned.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
-        if (cleaned.length > 10) {
-            formatted = '+' + cleaned.substring(0, cleaned.length - 10) + ' ' + formatted;
+    // Don't format if user is typing a + at the beginning
+    if (value === '+') {
+        return;
+    }
+    
+    // Preserve + at the beginning and remove other non-digits
+    let hasPlus = value.startsWith('+');
+    let cleaned = value.replace(/[^\d]/g, '');
+    
+    if (hasPlus && cleaned) {
+        // International format - minimal formatting to preserve flexibility
+        // Just add spaces every 3-4 digits for readability
+        if (cleaned.length > 2) {
+            let countryCode = cleaned.substring(0, 2);
+            let number = cleaned.substring(2);
+            
+            // Add spaces for readability: +XX XXX XXX XXXX
+            if (number.length > 6) {
+                number = number.replace(/(\d{3})(\d{3})(\d+)/, '$1 $2 $3');
+            } else if (number.length > 3) {
+                number = number.replace(/(\d{3})(\d+)/, '$1 $2');
+            }
+            
+            input.value = '+' + countryCode + (number ? ' ' + number : '');
+        } else {
+            input.value = '+' + cleaned;
         }
-        input.value = formatted;
+    } else if (cleaned) {
+        // Local format - add spaces for readability
+        if (cleaned.length > 7) {
+            // Format as XXX XXX XXXX for longer numbers
+            input.value = cleaned.replace(/(\d{3})(\d{3})(\d+)/, '$1 $2 $3');
+        } else if (cleaned.length > 4) {
+            // Format as XXX XXXX for medium numbers
+            input.value = cleaned.replace(/(\d{3})(\d+)/, '$1 $2');
+        } else {
+            input.value = cleaned;
+        }
     }
 }
 

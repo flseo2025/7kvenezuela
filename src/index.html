@@ -29,18 +29,18 @@
                 <div class="form-section">
                     <h3 class="section-title">Referred By</h3>
                     <div class="form-row">
-                        <div class="form-group">
+                        <div class="form-group required">
                             <label for="referrerFirstName">First Name <span class="required">*</span></label>
                             <input type="text" id="referrerFirstName" name="referrerFirstName" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group required">
                             <label for="referrerLastName">Last Name <span class="required">*</span></label>
                             <input type="text" id="referrerLastName" name="referrerLastName" required>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label for="referrerMobile">Mobile <span class="required">*</span></label>
-                        <input type="tel" id="referrerMobile" name="referrerMobile" required>
+                        <input type="tel" id="referrerMobile" name="referrerMobile" required placeholder="e.g., +58 414 123 4567 or 0414 123 4567">
                     </div>
                 </div>
 
@@ -83,7 +83,7 @@
 
                 <div class="form-section">
                     <h3 class="section-title">Preferred Method of Payment</h3>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <select id="paymentMethod" name="paymentMethod" required>
                             <option value="">Select payment method</option>
                             <option value="credit-card">Credit Card</option>
@@ -102,26 +102,26 @@
                 <div class="form-section">
                     <h3 class="section-title">Your Contact Information</h3>
                     <div class="form-row">
-                        <div class="form-group">
+                        <div class="form-group required">
                             <label for="firstName">First Name <span class="required">*</span></label>
                             <input type="text" id="firstName" name="firstName" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group required">
                             <label for="lastName">Last Name <span class="required">*</span></label>
                             <input type="text" id="lastName" name="lastName" required>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
+                        <div class="form-group required">
                             <label for="mobile">Mobile <span class="required">*</span></label>
-                            <input type="tel" id="mobile" name="mobile" required>
+                            <input type="tel" id="mobile" name="mobile" required placeholder="e.g., +58 414 123 4567 or 0414 123 4567">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group required">
                             <label for="email">Email <span class="required">*</span></label>
                             <input type="email" id="email" name="email" required>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label for="mailingAddress">Mailing Address <span class="required">*</span></label>
                         <textarea id="mailingAddress" name="mailingAddress" rows="3" required></textarea>
                     </div>
@@ -158,6 +158,9 @@
     
     <!-- Supabase Configuration -->
     <script src="js/supabase-config.js"></script>
+    
+    <!-- Google Sheets Integration -->
+    <script src="js/google-sheets-config.js"></script>
     
     <!-- Main Application Script -->
     <script src="js/script.js"></script>
