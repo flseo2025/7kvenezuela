@@ -39,152 +39,205 @@
     <meta name="publish_date" property="og:publish_date" content="2025-01-22T00:00:00+00:00">
     <link rel="canonical" href="https://soundmoneyopp.com/">
     
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=2025012201">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
+        <!-- Language Toggle -->
+        <div class="language-toggle">
+            <button class="lang-btn active" data-lang="en">
+                <span class="flag">🇺🇸</span>
+                <span class="lang-text">EN</span>
+            </button>
+            <button class="lang-btn" data-lang="es">
+                <span class="flag">🇪🇸</span>
+                <span class="lang-text">ES</span>
+            </button>
+        </div>
+        
         <header class="header">
             <h1 class="main-title">7k Metals</h1>
             <div class="event-title-container">
-                <h1 class="main-title">Welcome to the Pre-Launch of South America!</h1>
-                <p style="font-size: 1.3em; margin-top: 20px; line-height: 1.5;">You are the first members of a very exciting precious metals company that is growing around the globe. Please understand that in pre-launch we do not have all the system capabilities that we will have in the future as we continue to set up your country.</p>
+                <h1 class="main-title" data-translate="welcome.title">Welcome to the Pre-Launch of South America!</h1>
+                <p style="font-size: 1.3em; margin-top: 20px; line-height: 1.5;" data-translate="welcome.description">You are the first members of a very exciting precious metals company that is growing around the globe. Please understand that in pre-launch we do not have all the system capabilities that we will have in the future as we continue to set up your country.</p>
             </div>
             <div class="biblical-quote" style="padding: 10px 30px;">
-                <p>"Silver is mine and Gold is mine, saith the Lord of Hosts" - Haggai 2:8</p>
-                <p class="subtitle">And you can be blessed with Gold and Silver as well</p>
+                <p data-translate="quote.bible">"Silver is mine and Gold is mine, saith the Lord of Hosts" - Haggai 2:8</p>
+                <p class="subtitle" data-translate="quote.blessing">And you can be blessed with Gold and Silver as well</p>
             </div>
         </header>
 
         <main class="main-content">
             <div class="pre-registration-header">
-                <h3>Pre-Registration for 7k Membership</h3>
+                <h3 data-translate="form.preregistration">Pre-Registration for 7k Membership</h3>
             </div>
             <form id="leadCaptureForm" class="lead-form">
                 <div class="form-section">
-                    <h3 class="section-title">Referred By</h3>
+                    <h3 class="section-title" data-translate="form.referredby">Referred By</h3>
                     <div class="form-row">
                         <div class="form-group required">
-                            <label for="referrerFirstName">First Name <span class="required">*</span></label>
+                            <label for="referrerFirstName"><span data-translate="form.firstname">First Name</span> <span class="required" data-translate="form.required">*</span></label>
                             <input type="text" id="referrerFirstName" name="referrerFirstName" required>
                         </div>
                         <div class="form-group required">
-                            <label for="referrerLastName">Last Name <span class="required">*</span></label>
+                            <label for="referrerLastName"><span data-translate="form.lastname">Last Name</span> <span class="required" data-translate="form.required">*</span></label>
                             <input type="text" id="referrerLastName" name="referrerLastName" required>
                         </div>
                     </div>
                     <div class="form-group required">
-                        <label for="referrerMobile">Mobile <span class="required">*</span></label>
+                        <label for="referrerMobile"><span data-translate="form.mobile">Mobile</span> <span class="required" data-translate="form.required">*</span></label>
                         <input type="tel" id="referrerMobile" name="referrerMobile" required placeholder="e.g., +58 414 123 4567 or 0414 123 4567">
                     </div>
                 </div>
 
                 <div class="form-section">
-                    <h3 class="section-title">Interest Level</h3>
+                    <h3 class="section-title" data-translate="form.interest.title">Interest Level</h3>
                     <div class="radio-group">
                         <label class="radio-label">
                             <input type="radio" name="interestLevel" value="high" required>
                             <span class="radio-custom"></span>
-                            High
+                            <span data-translate="form.interest.very_interested">Very Interested</span>
                         </label>
                         <label class="radio-label">
                             <input type="radio" name="interestLevel" value="need-more-info" required>
                             <span class="radio-custom"></span>
-                            Need more information
+                            <span data-translate="form.interest.somewhat_interested">Somewhat Interested</span>
                         </label>
                     </div>
                 </div>
 
                 <div class="form-section">
-                    <h3 class="section-title">7k Package Preferred</h3>
+                    <h3 class="section-title" data-translate="form.package.title">Package Preferred</h3>
                     <div class="radio-group">
                         <label class="radio-label">
                             <input type="radio" name="packagePreferred" value="legacy" required>
                             <span class="radio-custom"></span>
-                            Legacy at $599
+                            <span data-translate="form.package.premium">Premium Package</span>
                         </label>
                         <label class="radio-label">
                             <input type="radio" name="packagePreferred" value="basic" required>
                             <span class="radio-custom"></span>
-                            Basic at $149 <span class="note">(Can upgrade later)</span>
+                            <span data-translate="form.package.basic">Basic Package</span> <span class="note">(Can upgrade later)</span>
                         </label>
                         <label class="radio-label">
                             <input type="radio" name="packagePreferred" value="undecided" required>
                             <span class="radio-custom"></span>
-                            Undecided
+                            <span data-translate="form.package.not_sure">Not Sure Yet</span>
                         </label>
                     </div>
                 </div>
 
                 <div class="form-section">
-                    <h3 class="section-title">Preferred Method of Payment</h3>
+                    <h3 class="section-title" data-translate="form.payment.title">Preferred Method of Payment</h3>
                     <div class="form-group required">
-                        <select id="paymentMethod" name="paymentMethod" required>
-                            <option value="">Select payment method</option>
-                            <option value="credit-card">Credit Card</option>
-                            <option value="debit-card">Debit Card</option>
-                            <option value="bank-transfer">Bank Transfer</option>
-                            <option value="paypal">PayPal</option>
-                            <option value="other">Other</option>
-                        </select>
+                        <label class="main-label"><span data-translate="form.payment.label">Select payment methods (check all that apply)</span> <span class="required" data-translate="form.required">*</span></label>
+                        <div class="payment-options">
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="paymentMethod" value="credit-card">
+                                    <span class="checkbox-custom"></span>
+                                    <span data-translate="form.payment.credit_card">Credit Card</span>
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="paymentMethod" value="debit-card">
+                                    <span class="checkbox-custom"></span>
+                                    <span data-translate="form.payment.debit_card">Debit Card</span>
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="paymentMethod" value="bank-transfer">
+                                    <span class="checkbox-custom"></span>
+                                    <span data-translate="form.payment.bank_transfer">Bank Transfer</span>
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="paymentMethod" value="paypal">
+                                    <span class="checkbox-custom"></span>
+                                    <span data-translate="form.payment.paypal">PayPal</span>
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="paymentMethod" value="digital-wallet-usdt">
+                                    <span class="checkbox-custom"></span>
+                                    <span data-translate="form.payment.digital_wallet">Digital Wallet USDT</span>
+                                </label>
+                            </div>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="paymentMethod" value="other" id="paymentMethodOther">
+                                    <span class="checkbox-custom"></span>
+                                    <span data-translate="form.payment.other">Other</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group" id="otherPaymentContainer" style="display: none; margin-top: 15px;">
-                        <label for="otherPaymentMethod">Please specify other payment method:</label>
-                        <input type="text" id="otherPaymentMethod" name="otherPaymentMethod" placeholder="Enter payment method">
+                        <label for="otherPaymentMethod" data-translate="form.payment.other_specify">Please specify other payment method:</label>
+                        <input type="text" id="otherPaymentMethod" name="otherPaymentMethod" data-translate-placeholder="form.payment.other_placeholder" placeholder="Enter payment method">
+                    </div>
+                    <div class="payment-clarification">
+                        <p><em data-translate="form.payment.clarification">*Please note: You will NOT be charged at this time. Payment will only be processed at a later date when we notify you, unless you have a credit card that is immediately compatible with our system.</em></p>
                     </div>
                 </div>
 
                 <div class="form-section">
-                    <h3 class="section-title">Your Contact Information</h3>
+                    <h3 class="section-title" data-translate="form.contact.title">Your Contact Information</h3>
                     <div class="form-row">
                         <div class="form-group required">
-                            <label for="firstName">First Name <span class="required">*</span></label>
+                            <label for="firstName"><span data-translate="form.firstname">First Name</span> <span class="required" data-translate="form.required">*</span></label>
                             <input type="text" id="firstName" name="firstName" required>
                         </div>
                         <div class="form-group required">
-                            <label for="lastName">Last Name <span class="required">*</span></label>
+                            <label for="lastName"><span data-translate="form.lastname">Last Name</span> <span class="required" data-translate="form.required">*</span></label>
                             <input type="text" id="lastName" name="lastName" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group required">
-                            <label for="mobile">Mobile <span class="required">*</span></label>
+                            <label for="mobile"><span data-translate="form.mobile">Mobile</span> <span class="required" data-translate="form.required">*</span></label>
                             <input type="tel" id="mobile" name="mobile" required placeholder="e.g., +58 414 123 4567 or 0414 123 4567">
                         </div>
                         <div class="form-group required">
-                            <label for="email">Email <span class="required">*</span></label>
+                            <label for="email"><span data-translate="form.email">Email</span> <span class="required" data-translate="form.required">*</span></label>
                             <input type="email" id="email" name="email" required>
                         </div>
                     </div>
                     <div class="form-group required">
-                        <label for="mailingAddress">Mailing Address <span class="required">*</span></label>
+                        <label for="mailingAddress"><span data-translate="form.contact.mailing_address">Mailing Address</span> <span class="required" data-translate="form.required">*</span></label>
                         <textarea id="mailingAddress" name="mailingAddress" rows="3" required></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="shippingAddress">Shipping Address</label>
+                    <!-- Shipping Address fields hidden as requested -->
+                    <div class="form-group" style="display: none;">
+                        <label for="shippingAddress" data-translate="form.contact.shipping_address">Shipping Address</label>
                         <textarea id="shippingAddress" name="shippingAddress" rows="3"></textarea>
                         <div class="checkbox-group">
                             <label class="checkbox-label">
                                 <input type="checkbox" id="sameAsMailingAddress" name="sameAsMailingAddress">
                                 <span class="checkbox-custom"></span>
-                                Same as mailing address
+                                <span data-translate="form.contact.same_as_mailing">Same as mailing address</span>
                             </label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="notes">Notes</label>
-                        <textarea id="notes" name="notes" rows="3" placeholder="Add any additional notes or comments here..."></textarea>
+                        <label for="notes" data-translate="form.additional.notes">Notes</label>
+                        <textarea id="notes" name="notes" rows="3" data-translate-placeholder="form.additional.notes_placeholder" placeholder="Any additional comments or questions..."></textarea>
                     </div>
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" class="submit-button">Submit Registration</button>
+                    <button type="submit" class="submit-button" data-translate="form.submit">Submit Registration</button>
                 </div>
             </form>
         </main>
 
         <footer class="footer">
-            <p>&copy; 2025 7k Metals South America Pre-Launch. All rights reserved.</p>
+            <p>&copy; 2025 7k Metals <span data-translate="footer.prelaunch">South America Pre-Launch</span>. <span data-translate="footer.rights">All rights reserved</span>.</p>
         </footer>
     </div>
 
@@ -196,6 +249,9 @@
     
     <!-- Google Sheets Integration -->
     <script src="js/google-sheets-config.js"></script>
+    
+    <!-- Translation System -->
+    <script src="js/translations.js"></script>
     
     <!-- Main Application Script -->
     <script src="js/script.js"></script>

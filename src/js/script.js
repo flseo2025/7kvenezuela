@@ -24,36 +24,31 @@ class LeadCaptureForm {
     }
 
     setupAddressSync() {
-        this.sameAddressCheckbox.addEventListener('change', (e) => {
-            if (e.target.checked) {
-                this.shippingAddress.value = this.mailingAddress.value;
-                this.shippingAddress.disabled = true;
-                this.shippingAddress.style.backgroundColor = '#f5f5f5';
-            } else {
-                this.shippingAddress.disabled = false;
-                this.shippingAddress.style.backgroundColor = '';
-            }
-        });
+        // Address synchronization disabled - shipping address fields are hidden
+        // Keeping method for compatibility but no functionality needed
+    }
 
-        this.mailingAddress.addEventListener('input', () => {
-            if (this.sameAddressCheckbox.checked) {
-                this.shippingAddress.value = this.mailingAddress.value;
-            }
-        });
+    getTranslation(key) {
+        return window.translationManager ? window.translationManager.getTranslation(key) : key;
     }
 
     setupPaymentMethodToggle() {
-        const paymentMethod = document.getElementById('paymentMethod');
+        const paymentMethodCheckboxes = document.querySelectorAll('input[name="paymentMethod"]');
         const otherPaymentContainer = document.getElementById('otherPaymentContainer');
+        const otherCheckbox = document.getElementById('paymentMethodOther');
         
-        paymentMethod.addEventListener('change', (e) => {
-            if (e.target.value === 'other') {
-                otherPaymentContainer.style.display = 'block';
-            } else {
-                otherPaymentContainer.style.display = 'none';
-                // Clear the other payment method field when not needed
-                document.getElementById('otherPaymentMethod').value = '';
-            }
+        // Add change event listener to all payment method checkboxes
+        paymentMethodCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                // Check if "other" checkbox is checked
+                if (otherCheckbox.checked) {
+                    otherPaymentContainer.style.display = 'block';
+                } else {
+                    otherPaymentContainer.style.display = 'none';
+                    // Clear the other payment method field when not needed
+                    document.getElementById('otherPaymentMethod').value = '';
+                }
+            });
         });
     }
 
@@ -70,7 +65,7 @@ class LeadCaptureForm {
         // Required field validation
         if (field.hasAttribute('required') && !value) {
             isValid = false;
-            errorMessage = 'This field is required.';
+            errorMessage = this.getTranslation('validation.required');
         }
 
         // Email validation with enhanced pattern
@@ -78,7 +73,7 @@ class LeadCaptureForm {
             const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
             if (!emailRegex.test(value)) {
                 isValid = false;
-                errorMessage = 'Please enter a valid email address.';
+                errorMessage = this.getTranslation('validation.email');
             }
         }
 
@@ -109,7 +104,7 @@ class LeadCaptureForm {
             
             if (!isValidPhone) {
                 isValid = false;
-                errorMessage = 'Please enter a valid phone number (local: 7-11 digits, international: +country code + number).';
+                errorMessage = this.getTranslation('validation.phone');
             }
         }
 
@@ -118,7 +113,7 @@ class LeadCaptureForm {
             const nameRegex = /^[a-zA-Z\s\-'\.]+$/;
             if (!nameRegex.test(value)) {
                 isValid = false;
-                errorMessage = 'Please enter a valid name (letters only).';
+                errorMessage = this.getTranslation('validation.name');
             }
         }
 
@@ -156,6 +151,32 @@ class LeadCaptureForm {
             }
         });
 
+        // Validate payment method checkboxes (required)
+        const paymentCheckboxes = this.form.querySelectorAll('input[name="paymentMethod"]');
+        const isPaymentSelected = Array.from(paymentCheckboxes).some(checkbox => checkbox.checked);
+        
+        if (!isPaymentSelected) {
+            isFormValid = false;
+            // Add error message for payment methods
+            const paymentSection = paymentCheckboxes[0].closest('.form-group');
+            const existingError = paymentSection.querySelector('.error-message');
+            if (!existingError) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message show';
+                errorDiv.textContent = this.getTranslation('validation.payment_required');
+                paymentSection.appendChild(errorDiv);
+            }
+        } else {
+            // Remove error message if payment is selected
+            const paymentSection = paymentCheckboxes[0].closest('.form-group');
+            const existingError = paymentSection.querySelector('.error-message');
+            if (existingError) {
+                existingError.remove();
+            }
+        }
+
+        // Shipping address validation removed - fields are hidden
+
         // Validate radio groups separately
         const radioGroups = ['interestLevel', 'packagePreferred'];
         radioGroups.forEach(groupName => {
@@ -163,7 +184,7 @@ class LeadCaptureForm {
             if (radioGroup.length > 0) {
                 const isChecked = Array.from(radioGroup).some(radio => radio.checked);
                 if (!isChecked) {
-                    this.showError(radioGroup[0], 'Please select an option.');
+                    this.showError(radioGroup[0], this.getTranslation('validation.radio_required'));
                     isFormValid = false;
                 }
             }
@@ -262,14 +283,39 @@ class LeadCaptureForm {
         const formData = new FormData(this.form);
         const data = {};
         
+        // Handle regular form fields
         for (let [key, value] of formData.entries()) {
-            data[key] = value;
+            // Handle checkbox arrays (like payment methods)
+            if (key === 'paymentMethod') {
+                if (!data[key]) {
+                    data[key] = [];
+                }
+                data[key].push(value);
+            } else {
+                data[key] = value;
+            }
         }
         
-        // Handle "other" payment method
-        if (data.paymentMethod === 'other') {
-            const otherPaymentMethod = data.otherPaymentMethod;
-            data.paymentMethod = otherPaymentMethod && otherPaymentMethod.trim() ? otherPaymentMethod.trim() : 'other';
+        // Convert payment method array to string for compatibility
+        if (Array.isArray(data.paymentMethod)) {
+            let paymentMethods = data.paymentMethod;
+            
+            // Handle "other" payment method
+            if (paymentMethods.includes('other')) {
+                const otherPaymentMethod = data.otherPaymentMethod;
+                if (otherPaymentMethod && otherPaymentMethod.trim()) {
+                    // Replace 'other' with the actual specified method
+                    paymentMethods = paymentMethods.map(method => 
+                        method === 'other' ? otherPaymentMethod.trim() : method
+                    );
+                }
+            }
+            
+            // Join multiple payment methods with comma separator
+            data.paymentMethod = paymentMethods.join(', ');
+        } else if (!data.paymentMethod) {
+            // If no payment methods selected, set empty string
+            data.paymentMethod = '';
         }
         
         // Add timestamp
